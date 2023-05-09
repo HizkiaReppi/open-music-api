@@ -4,8 +4,8 @@ import albums from './api/albums/index.js';
 import songs from './api/songs/index.js';
 import AlbumsService from './services/AlbumService.js';
 import SongsService from './services/SongService.js';
-import albumsValidator from './validator/albums/index.js';
-import songsValidator from './validator/songs/index.js';
+import albumsValidator from './validators/albums/index.js';
+import songsValidator from './validators/songs/index.js';
 import ClientError from './exceptions/ClientError.js';
 
 dotenv.config();
