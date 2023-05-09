@@ -1,0 +1,27 @@
+# Node.js
+node_modules/
+npm-debug.log*
+
+# IDEs and editors
+.vscode/
+
+# PostgreSQL
+*.backup
+*.sql
+
+# Logs
+logs/
+*.log
+
+# Build files
+dist/
+build/
+
+# Environment variables
+.env
+
+# Dependencies installed via npm
+package-lock.json
+
+# Testing
+coverage/
