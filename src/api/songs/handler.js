@@ -10,14 +10,12 @@ class SongsHandler {
 
   async postSongHandler(req, h) {
     this._validator.validateSongPayload(req.payload);
-    const result = await this._service.addSong(req.payload);
+    const songId = await this._service.addSong(req.payload);
 
     const res = h
       .response({
         status: 'success',
-        data: {
-          songId: result,
-        },
+        data: { songId },
       })
       .code(201);
     return res;

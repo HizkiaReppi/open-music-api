@@ -18,6 +18,7 @@
     "camelcase": "off",
     "import/no-unresolved": "off",
     "import/extensions": "off",
-    "no-else-return": "off"
+    "no-else-return": "off",
+    "newline-per-chained-call": "off"
   }
 }
