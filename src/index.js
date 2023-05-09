@@ -6,6 +6,7 @@ import AlbumsService from './services/AlbumService.js';
 import SongsService from './services/SongService.js';
 import albumsValidator from './validator/albums/index.js';
 import songsValidator from './validator/songs/index.js';
+import ClientError from './exceptions/ClientError.js';
 
 dotenv.config();
 
@@ -39,6 +40,33 @@ const init = async () => {
       },
     },
   ]);
+
+  server.ext('onPreResponse', (req, h) => {
+    const { response } = req;
+    if (response instanceof Error) {
+      if (response instanceof ClientError) {
+        const newResponse = h
+          .response({
+            status: 'fail',
+            message: response.message,
+          })
+          .code(response.statusCode);
+        return newResponse;
+      }
+      if (!response.isServer) {
+        return h.continue;
+      }
+      const newResponse = h
+        .response({
+          status: 'error',
+          message: 'Mohon maaf, terjadi kegagalan pada server',
+        })
+        .code(500);
+      return newResponse;
+    }
+
+    return h.continue;
+  });
 
   await server.start();
   console.log(`Server berjalan pada ${server.info.uri}`);
