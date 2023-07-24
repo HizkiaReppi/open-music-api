@@ -42,22 +42,17 @@ class AlbumsService {
 
     const albumData = rows[0];
     const songQuery = {
-      text: 'SELECT * FROM songs WHERE album_id = $1',
+      text: 'SELECT id, title, performer FROM songs WHERE album_id = $1',
       values: [id],
     };
 
     const songResult = await this._pool.query(songQuery);
-    const songs = songResult.rows.map((song) => ({
-      id: song.id,
-      title: song.title,
-      performer: song.performer,
-    }));
 
     const resultAlbum = {
       id: albumData.id,
       name: albumData.name,
       year: albumData.year,
-      songs,
+      songResult,
     };
 
     return mapDBtoAlbumModel(resultAlbum);

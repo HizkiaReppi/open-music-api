@@ -19,6 +19,9 @@
     "import/no-unresolved": "off",
     "import/extensions": "off",
     "no-else-return": "off",
-    "newline-per-chained-call": "off"
+    "newline-per-chained-call": "off",
+    "no-useless-catch": "off",
+    "no-shadow": "off",
+    "import/no-extraneous-dependencies": "off"
   }
 }
