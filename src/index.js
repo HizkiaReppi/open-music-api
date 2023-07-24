@@ -2,10 +2,13 @@ import Hapi from '@hapi/hapi';
 import dotenv from 'dotenv';
 import albums from './api/albums/index.js';
 import songs from './api/songs/index.js';
+import users from './api/users/index.js';
 import AlbumsService from './services/AlbumService.js';
 import SongsService from './services/SongService.js';
+import UsersService from './services/UserService.js';
 import albumsValidator from './validators/albums/index.js';
 import songsValidator from './validators/songs/index.js';
+import usersValidator from './validators/users/index.js';
 import ClientError from './exceptions/ClientError.js';
 
 dotenv.config();
@@ -37,6 +40,13 @@ const init = async () => {
       options: {
         service: songsService,
         validator: songsValidator,
+      },
+    },
+    {
+      plugin: users,
+      options: {
+        service: UsersService,
+        validator: usersValidator,
       },
     },
   ]);
