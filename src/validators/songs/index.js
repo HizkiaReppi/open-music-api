@@ -3,9 +3,9 @@ import SongsSchema from './schema.js';
 
 const songsValidator = {
   validateSongPayload: (payload) => {
-    const validationResult = SongsSchema.validate(payload);
-    if (validationResult.error) {
-      throw new InvariantError(validationResult.error.message);
+    const { error } = SongsSchema.validate(payload);
+    if (error) {
+      throw new InvariantError(error.message);
     }
   },
 };

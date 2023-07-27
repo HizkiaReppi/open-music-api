@@ -3,9 +3,9 @@ import AlbumsSchema from './schema.js';
 
 const albumsValidator = {
   validateAlbumPayload: (payload) => {
-    const validationResult = AlbumsSchema.validate(payload);
-    if (validationResult.error) {
-      throw new InvariantError(validationResult.error.message);
+    const { error } = AlbumsSchema.validate(payload);
+    if (error) {
+      throw new InvariantError(error.message);
     }
   },
 };

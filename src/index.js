@@ -8,6 +8,7 @@ import users from './api/users/index.js';
 import authentications from './api/authentications/index.js';
 import playlists from './api/playlists/index.js';
 import collaborations from './api/collaborations/index.js';
+import _exports from './api/exports/index.js';
 
 import AlbumsService from './services/postgres/AlbumService.js';
 import SongsService from './services/postgres/SongService.js';
@@ -15,6 +16,7 @@ import UsersService from './services/postgres/UserService.js';
 import AuthenticationsService from './services/postgres/AuthenticationsService.js';
 import PlaylistsService from './services/postgres/PlaylistService.js';
 import CollaborationsService from './services/postgres/CollaborationsService.js';
+import ProducerService from './services/rabbitmq/ProducerService.js';
 
 import albumsValidator from './validators/albums/index.js';
 import songsValidator from './validators/songs/index.js';
@@ -22,6 +24,7 @@ import usersValidator from './validators/users/index.js';
 import authenticationsValidator from './validators/authentications/index.js';
 import playlistsValidator from './validators/playlists/index.js';
 import collaborationsValidator from './validators/collaborations/index.js';
+import exportsValidator from './validators/exports/index.js';
 
 import ClientError from './exceptions/ClientError.js';
 
@@ -117,6 +120,14 @@ const init = async () => {
         playlistsService,
         usersService,
         validator: collaborationsValidator,
+      },
+    },
+    {
+      plugin: _exports,
+      options: {
+        producerService: ProducerService,
+        playlistsService,
+        validator: exportsValidator,
       },
     },
   ]);
