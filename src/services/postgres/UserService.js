@@ -1,9 +1,9 @@
 import pg from 'pg';
 import bcrypt from 'bcrypt';
 import { nanoid } from 'nanoid';
-import InvariantError from '../exceptions/InvariantError.js';
-import AuthenticationError from '../exceptions/AuthenticationError.js';
-import NotFoundError from '../exceptions/NotFoundError.js';
+import InvariantError from '../../exceptions/InvariantError.js';
+import AuthenticationError from '../../exceptions/AuthenticationError.js';
+import NotFoundError from '../../exceptions/NotFoundError.js';
 
 const { Pool } = pg;
 

@@ -1,8 +1,8 @@
 import pg from 'pg';
 import { nanoid } from 'nanoid';
-import { mapDBtoSongsModel } from '../utils/index.js';
-import InvariantError from '../exceptions/InvariantError.js';
-import NotFoundError from '../exceptions/NotFoundError.js';
+import { mapDBtoSongsModel } from '../../utils/index.js';
+import InvariantError from '../../exceptions/InvariantError.js';
+import NotFoundError from '../../exceptions/NotFoundError.js';
 
 const { Pool } = pg;
 

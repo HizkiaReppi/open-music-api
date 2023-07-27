@@ -1,7 +1,7 @@
 import pg from 'pg';
 import { nanoid } from 'nanoid';
-import InvariantError from '../exceptions/InvariantError.js';
-import AuthorizationError from '../exceptions/AuthorizationError.js';
+import InvariantError from '../../exceptions/InvariantError.js';
+import AuthorizationError from '../../exceptions/AuthorizationError.js';
 
 const { Pool } = pg;
 

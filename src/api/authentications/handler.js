@@ -1,4 +1,5 @@
 import autoBind from 'auto-bind';
+import logger from '../../utils/logging.js';
 
 class AuthenticationsHandler {
   constructor(authenticationsService, usersService, tokenManager, validator) {
@@ -24,6 +25,8 @@ class AuthenticationsHandler {
 
     await this._authenticationsService.addRefreshToken(refreshToken);
 
+    logger.info(`${username} berhasil login`);
+
     const res = h
       .response({
         status: 'success',
@@ -46,6 +49,9 @@ class AuthenticationsHandler {
 
     const { id } = this._tokenManager.verifyRefreshToken(refreshToken);
     const accessToken = this._tokenManager.generateAccessToken({ id });
+
+    logger.info('Access Token berhasil diperbarui');
+
     return {
       status: 'success',
       message: 'Access Token berhasil diperbarui',
@@ -62,6 +68,8 @@ class AuthenticationsHandler {
 
     await this._authenticationsService.verifyRefreshToken(refreshToken);
     await this._authenticationsService.deleteRefreshToken(refreshToken);
+
+    logger.info('Refresh Token berhasil dihapus');
 
     return {
       status: 'success',

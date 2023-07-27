@@ -9,12 +9,12 @@ import authentications from './api/authentications/index.js';
 import playlists from './api/playlists/index.js';
 import collaborations from './api/collaborations/index.js';
 
-import AlbumsService from './services/AlbumService.js';
-import SongsService from './services/SongService.js';
-import UsersService from './services/UserService.js';
-import AuthenticationsService from './services/AuthenticationsService.js';
-import PlaylistsService from './services/PlaylistService.js';
-import CollaborationsService from './services/CollaborationsService.js';
+import AlbumsService from './services/postgres/AlbumService.js';
+import SongsService from './services/postgres/SongService.js';
+import UsersService from './services/postgres/UserService.js';
+import AuthenticationsService from './services/postgres/AuthenticationsService.js';
+import PlaylistsService from './services/postgres/PlaylistService.js';
+import CollaborationsService from './services/postgres/CollaborationsService.js';
 
 import albumsValidator from './validators/albums/index.js';
 import songsValidator from './validators/songs/index.js';
@@ -26,6 +26,8 @@ import collaborationsValidator from './validators/collaborations/index.js';
 import ClientError from './exceptions/ClientError.js';
 
 import TokenManager from './tokenize/TokenManager.js';
+
+import logger from './utils/logging.js';
 
 dotenv.config();
 
@@ -129,6 +131,8 @@ const init = async () => {
             message: response.message,
           })
           .code(response.statusCode);
+
+        logger.error(response.message);
         return newResponse;
       }
       if (!response.isServer) {
@@ -140,6 +144,7 @@ const init = async () => {
           message: 'Mohon maaf, terjadi kegagalan pada server',
         })
         .code(500);
+      logger.error('Terjadi kegagalan pada server');
       return newResponse;
     }
 
@@ -147,7 +152,7 @@ const init = async () => {
   });
 
   await server.start();
-  console.log(`Server berjalan pada ${server.info.uri}`);
+  logger.info(`Server berjalan pada ${server.info.uri}`);
 };
 
 init();

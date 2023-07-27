@@ -1,4 +1,5 @@
 import autoBind from 'auto-bind';
+import logger from '../../utils/logging.js';
 
 class UsersHandler {
   constructor(service, validator) {
@@ -18,6 +19,8 @@ class UsersHandler {
       password,
       fullname,
     });
+
+    logger.info(`${username} berhasil mendaftar`);
 
     const res = h
       .response({

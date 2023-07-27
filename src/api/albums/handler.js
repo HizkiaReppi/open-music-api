@@ -1,4 +1,5 @@
 import autoBind from 'auto-bind';
+import logger from '../../utils/logging.js';
 
 class AlbumsHandler {
   constructor(service, validator) {
@@ -11,6 +12,8 @@ class AlbumsHandler {
   async postAlbumHandler(req, h) {
     this._validator.validateAlbumPayload(req.payload);
     const result = await this._service.addAlbum(req.payload);
+
+    logger.info(`Album dengan id "${result}" berhasil ditambahkan`);
 
     const res = h
       .response({
@@ -26,6 +29,9 @@ class AlbumsHandler {
   async getAlbumsByIdHandler(req) {
     const { id } = req.params;
     const result = await this._service.getAlbumById(id);
+
+    logger.info(`Album dengan id "${id}" berhasil diambil`);
+
     return {
       status: 'success',
       data: {
@@ -40,6 +46,8 @@ class AlbumsHandler {
     const { id } = req.params;
     await this._service.editAlbumById(id, { name, year });
 
+    logger.info(`Album dengan id "${id}" berhasil diperbarui`);
+
     return {
       status: 'success',
       message: `Album dengan id "${id}" berhasil diperbarui`,
@@ -49,6 +57,9 @@ class AlbumsHandler {
   async deleteAlbumByIdHandler(req) {
     const { id } = req.params;
     await this._service.deleteAlbumById(id);
+
+    logger.info(`Album dengan id "${id}" berhasil dihapus`);
+
     return {
       status: 'success',
       message: `Album dengan id "${id}" berhasil dihapus`,

@@ -21,7 +21,9 @@
     "joi": "^17.9.2",
     "nanoid": "^4.0.2",
     "node-pg-migrate": "^6.2.2",
-    "pg": "^8.10.0"
+    "pg": "^8.10.0",
+    "pino": "^8.14.1",
+    "pino-pretty": "^10.2.0"
   },
   "devDependencies": {
     "eslint": "^8.40.0",

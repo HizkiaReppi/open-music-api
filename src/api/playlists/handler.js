@@ -1,4 +1,5 @@
 import autoBind from 'auto-bind';
+import logger from '../../utils/logging.js';
 
 class PlaylistsHandler {
   constructor(playlistsService, songsService, validator) {
@@ -20,6 +21,8 @@ class PlaylistsHandler {
       credentialId,
     );
 
+    logger.info(`Playlist dengan id ${playlistId} berhasil ditambahkan`);
+
     const res = h
       .response({
         status: 'success',
@@ -35,6 +38,8 @@ class PlaylistsHandler {
     const { id: credentialId } = req.auth.credentials;
     const playlists = await this._playlistsService.getPlaylists(credentialId);
 
+    logger.info('Playlists berhasil diambil');
+
     return {
       status: 'success',
       data: {
@@ -49,6 +54,8 @@ class PlaylistsHandler {
 
     await this._playlistsService.verifyPlaylistOwner(playlistId, credentialId);
     await this._playlistsService.deletePlaylist(playlistId);
+
+    logger.info(`Playlist dengan id ${playlistId} berhasil dihapus`);
 
     return {
       status: 'success',
@@ -73,6 +80,8 @@ class PlaylistsHandler {
       'add',
     );
 
+    logger.info('Musik berhasil ditambahkan ke dalam playlist');
+
     const res = h
       .response({
         status: 'success',
@@ -89,6 +98,8 @@ class PlaylistsHandler {
       playlistId,
       credentialId,
     );
+
+    logger.info(`Playlist ${playlist.name} berhasil diambil`);
 
     return {
       status: 'success',
@@ -114,6 +125,8 @@ class PlaylistsHandler {
       'delete',
     );
 
+    logger.info('Musik berhasil dihapus dari playlist');
+
     return {
       status: 'success',
       message: 'Musik berhasil dihapus dari playlist',
@@ -129,6 +142,8 @@ class PlaylistsHandler {
     const activities = await this._playlistsService.getPlaylistActivitiesById(
       id,
     );
+
+    logger.info('Aktivitas berhasil diambil');
 
     return {
       status: 'success',

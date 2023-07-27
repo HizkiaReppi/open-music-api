@@ -1,8 +1,8 @@
 import pg from 'pg';
 import { nanoid } from 'nanoid';
-import { mapDBtoAlbumModel } from '../utils/index.js';
-import InvariantError from '../exceptions/InvariantError.js';
-import NotFoundError from '../exceptions/NotFoundError.js';
+import { mapDBtoAlbumModel } from '../../utils/index.js';
+import InvariantError from '../../exceptions/InvariantError.js';
+import NotFoundError from '../../exceptions/NotFoundError.js';
 
 const { Pool } = pg;
 
@@ -52,7 +52,7 @@ class AlbumsService {
       id: albumData.id,
       name: albumData.name,
       year: albumData.year,
-      songResult,
+      songs: songResult.rows,
     };
 
     return mapDBtoAlbumModel(resultAlbum);

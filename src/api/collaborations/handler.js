@@ -1,4 +1,5 @@
 import autoBind from 'auto-bind';
+import logger from '../../utils/logging.js';
 
 class CollaborationsHandler {
   constructor(
@@ -30,6 +31,8 @@ class CollaborationsHandler {
       userId,
     );
 
+    logger.info(`Kolaborasi dengan id ${collaborationId} berhasil ditambahkan`);
+
     const res = h
       .response({
         status: 'success',
@@ -49,6 +52,8 @@ class CollaborationsHandler {
 
     await this._playlistsService.verifyPlaylistOwner(playlistId, credentialId);
     await this._collaborationsService.deleteCollaboration(playlistId, userId);
+
+    logger.info('Kolaborasi berhasil dihapus');
 
     return {
       status: 'success',

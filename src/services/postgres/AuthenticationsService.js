@@ -1,5 +1,5 @@
 import pg from 'pg';
-import InvariantError from '../exceptions/InvariantError.js';
+import InvariantError from '../../exceptions/InvariantError.js';
 
 const { Pool } = pg;
 
