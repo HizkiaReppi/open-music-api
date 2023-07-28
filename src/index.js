@@ -1,7 +1,6 @@
 import Hapi from '@hapi/hapi';
 import Jwt from '@hapi/jwt';
 import Inert from '@hapi/inert';
-import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -40,8 +39,7 @@ import ClientError from './exceptions/ClientError.js';
 import TokenManager from './tokenize/TokenManager.js';
 
 import logger from './utils/logging.js';
-
-dotenv.config();
+import config from './utils/config.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -63,8 +61,8 @@ const init = async () => {
   );
 
   const server = Hapi.server({
-    port: process.env.PORT,
-    host: process.env.HOST,
+    port: config.app.port,
+    host: config.app.host,
     routes: {
       cors: {
         origin: ['*'],
@@ -82,12 +80,12 @@ const init = async () => {
   ]);
 
   server.auth.strategy('open_music_jwt', 'jwt', {
-    keys: process.env.ACCESS_TOKEN_KEY,
+    keys: config.jwt.accessTokenKey,
     verify: {
       aud: false,
       iss: false,
       sub: false,
-      maxAgeSec: process.env.ACCESS_TOKEN_AGE,
+      maxAgeSec: config.jwt.accessTokenAge,
     },
     validate: (artifacts) => ({
       isValid: true,
