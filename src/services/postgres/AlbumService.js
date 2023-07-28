@@ -52,6 +52,7 @@ class AlbumsService {
       id: albumData.id,
       name: albumData.name,
       year: albumData.year,
+      coverUrl: albumData.cover,
       songs: songResult.rows,
     };
 
@@ -69,6 +70,19 @@ class AlbumsService {
 
     if (!rowCount) {
       throw new NotFoundError('Gagal memperbarui album. Id tidak ditemukan');
+    }
+  }
+
+  async addAlbumCoverById(id, path) {
+    const query = {
+      text: 'UPDATE albums SET cover = $1 WHERE id = $2 RETURNING id',
+      values: [path, id],
+    };
+
+    const { rows } = await this._pool.query(query);
+
+    if (!rows.length) {
+      throw new NotFoundError('Gagal memperbarui album. Id tidak ditemukan.');
     }
   }
 

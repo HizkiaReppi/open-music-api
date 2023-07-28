@@ -1,7 +1,8 @@
-export const mapDBtoAlbumModel = ({ id, name, year, songs }) => ({
+export const mapDBtoAlbumModel = ({ id, name, year, coverUrl, songs }) => ({
   id,
   name,
   year,
+  coverUrl,
   songs,
 });
 
