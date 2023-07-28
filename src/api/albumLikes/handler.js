@@ -29,7 +29,7 @@ class AlbumLikesHandler {
 
   async getAlbumLikesHandler(req, h) {
     const { id } = req.params;
-    const likes = await this._service.getAlbumLikes(id);
+    const { likes, cache } = await this._service.getAlbumLikes(id);
 
     logger.info('Berhasil mendapatkan daftar like');
 
@@ -39,6 +39,8 @@ class AlbumLikesHandler {
         likes,
       },
     });
+
+    if (cache) res.header('X-Data-Source', 'cache');
 
     return res;
   }

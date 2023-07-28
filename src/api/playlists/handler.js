@@ -34,18 +34,24 @@ class PlaylistsHandler {
     return res;
   }
 
-  async getPlaylistsHandler(req) {
+  async getPlaylistsHandler(req, h) {
     const { id: credentialId } = req.auth.credentials;
-    const playlists = await this._playlistsService.getPlaylists(credentialId);
+    const { playlists, cache } = await this._playlistsService.getPlaylists(
+      credentialId,
+    );
 
     logger.info('Playlists berhasil diambil');
 
-    return {
+    const res = h.response({
       status: 'success',
       data: {
         playlists,
       },
-    };
+    });
+
+    if (cache) res.header('X-Data-Source', 'cache');
+
+    return res;
   }
 
   async deletePlaylistByIdHandler(req) {

@@ -24,6 +24,7 @@ import PlaylistsService from './services/postgres/PlaylistService.js';
 import CollaborationsService from './services/postgres/CollaborationsService.js';
 import ProducerService from './services/rabbitmq/ProducerService.js';
 import StorageService from './services/storage/StorageService.js';
+import CacheService from './services/redis/CacheService.js';
 
 import albumsValidator from './validators/albums/index.js';
 import songsValidator from './validators/songs/index.js';
@@ -46,13 +47,17 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const init = async () => {
+  const cacheService = new CacheService();
   const albumsService = new AlbumsService();
-  const albumLikesService = new AlbumLikesService(albumsService);
+  const albumLikesService = new AlbumLikesService(albumsService, cacheService);
   const songsService = new SongsService();
   const usersService = new UsersService();
   const authenticationsService = new AuthenticationsService();
-  const collaborationsService = new CollaborationsService();
-  const playlistsService = new PlaylistsService(collaborationsService);
+  const collaborationsService = new CollaborationsService(cacheService);
+  const playlistsService = new PlaylistsService(
+    collaborationsService,
+    cacheService,
+  );
   const storageService = new StorageService(
     path.resolve(__dirname, '/api/albums/file/images/album_cover'),
   );

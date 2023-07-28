@@ -1,4 +1,5 @@
 import amqp from 'amqplib';
+import logger from '../../utils/logging.js';
 
 const ProducerService = {
   sendMessage: async (queue, message) => {
@@ -15,7 +16,7 @@ const ProducerService = {
         connection.close();
       }, 1000);
     } catch (error) {
-      console.error('Error sending message:', error);
+      logger.error('Error sending message:', error);
     }
   },
 };

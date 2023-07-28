@@ -7,9 +7,10 @@ import ClientError from '../../exceptions/ClientError.js';
 const { Pool } = pg;
 
 class AlbumLikeService {
-  constructor(albumService) {
+  constructor(albumService, cacheService) {
     this._pool = new Pool();
     this._albumService = albumService;
+    this._cacheService = cacheService;
     this._tbName = 'user_album_likes';
   }
 
@@ -26,22 +27,37 @@ class AlbumLikeService {
       throw new InvariantError('Gagal menyukai album');
     }
 
+    await this._cacheService.delete(`album-likes:${albumId}`);
+
     return rows[0].id;
   }
 
   async getAlbumLikes(albumId) {
-    const query = {
-      text: `SELECT * FROM ${this._tbName} WHERE album_id = $1`,
-      values: [albumId],
-    };
+    try {
+      const result = await this._cacheService.get(`album-likes:${albumId}`);
+      return {
+        likes: JSON.parse(result),
+        cache: true,
+      };
+    } catch (error) {
+      const query = {
+        text: `SELECT * FROM ${this._tbName} WHERE album_id = $1`,
+        values: [albumId],
+      };
 
-    const { rowCount } = await this._pool.query(query);
+      const { rowCount } = await this._pool.query(query);
 
-    if (!rowCount) {
-      throw new NotFoundError('Album belum memiliki like');
+      if (!rowCount) {
+        throw new NotFoundError('Album belum memiliki like');
+      }
+
+      await this._cacheService.set(`album-likes:${albumId}`, rowCount);
+
+      return {
+        likes: rowCount,
+        cache: false,
+      };
     }
-
-    return rowCount;
   }
 
   async deleteLike(albumId, userId) {
@@ -49,11 +65,14 @@ class AlbumLikeService {
       text: `DELETE FROM ${this._tbName} WHERE album_id = $1 AND user_id = $2`,
       values: [albumId, userId],
     };
+
     const { rowCount } = await this._pool.query(query);
 
     if (!rowCount) {
       throw new NotFoundError('Like gagal dihapus. Id tidak ditemukan');
     }
+
+    await this._cacheService.delete(`album-likes:${albumId}`);
   }
 
   async verifyUserLiked(albumId, userId) {
