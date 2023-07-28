@@ -6,6 +6,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import albums from './api/albums/index.js';
+import albumLikes from './api/albumLikes/index.js';
 import songs from './api/songs/index.js';
 import users from './api/users/index.js';
 import authentications from './api/authentications/index.js';
@@ -15,6 +16,7 @@ import _exports from './api/exports/index.js';
 import uploads from './api/uploads/index.js';
 
 import AlbumsService from './services/postgres/AlbumService.js';
+import AlbumLikesService from './services/postgres/AlbumLikeService.js';
 import SongsService from './services/postgres/SongService.js';
 import UsersService from './services/postgres/UserService.js';
 import AuthenticationsService from './services/postgres/AuthenticationsService.js';
@@ -45,6 +47,7 @@ const __dirname = path.dirname(__filename);
 
 const init = async () => {
   const albumsService = new AlbumsService();
+  const albumLikesService = new AlbumLikesService(albumsService);
   const songsService = new SongsService();
   const usersService = new UsersService();
   const authenticationsService = new AuthenticationsService();
@@ -151,6 +154,12 @@ const init = async () => {
         storageService,
         albumsService,
         validator: uploadsValidator,
+      },
+    },
+    {
+      plugin: albumLikes,
+      options: {
+        service: albumLikesService,
       },
     },
   ]);
