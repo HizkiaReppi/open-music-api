@@ -1,7 +1,7 @@
 import AlbumLikesHandler from './handler.js';
 import routes from './routes.js';
 
-export default {
+const albumLikesPlugin = {
   name: 'albumLikes',
   version: '1.0.0',
   register: async (server, { service }) => {
@@ -9,3 +9,5 @@ export default {
     server.route(routes(albumLikesHandler));
   },
 };
+
+export default albumLikesPlugin;

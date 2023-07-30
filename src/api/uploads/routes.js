@@ -20,10 +20,10 @@ const routes = ({ postUploadAlbumCoverHandler }) => [
   },
   {
     method: 'GET',
-    path: '/uploads/{param*}',
+    path: '/albums/images/{param*}',
     handler: {
       directory: {
-        path: path.resolve(__dirname, 'file'),
+        path: path.resolve(__dirname, '../albums/file/images/album_cover'),
       },
     },
   },

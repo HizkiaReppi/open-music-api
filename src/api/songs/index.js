@@ -1,7 +1,7 @@
 import SongsHandler from './handler.js';
 import songRoutes from './routes.js';
 
-export default {
+const songsPlugin = {
   name: 'songs',
   version: '1.0.0',
   register: async (server, { service, validator }) => {
@@ -9,3 +9,5 @@ export default {
     server.route(songRoutes(songsHandler));
   },
 };
+
+export default songsPlugin;

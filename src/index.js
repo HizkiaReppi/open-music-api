@@ -1,8 +1,8 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
 import Hapi from '@hapi/hapi';
 import Jwt from '@hapi/jwt';
 import Inert from '@hapi/inert';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
 import albums from './api/albums/index.js';
 import albumLikes from './api/albumLikes/index.js';
@@ -57,7 +57,7 @@ const init = async () => {
     cacheService,
   );
   const storageService = new StorageService(
-    path.resolve(__dirname, '/api/albums/file/images/album_cover'),
+    path.resolve(__dirname, 'api/albums/file/images/album_cover'),
   );
 
   const server = Hapi.server({
