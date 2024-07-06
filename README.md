@@ -26,4 +26,17 @@ Materi yang dipelajari dikelas ini:
 
 Pada submission pertama kelas ini, saya membuat aplikasi _Open Music API_ dengan menerapkan RESTful API menggunakan framework Hapi, data validation dengan Joi, dan PostgreSQL database.
 
+### Submission Kedua
+
+Pada submission kedua kelas ini, saya menerapkan Authentication dan Authorization, Error Handling serta Normalisasi Database.
+
+### Submission Ketiga / Final Submission
+
+Pada submission terakhir kelas ini, saya membuat aplikasi _Open Music API_ dengan menerapkan RESTful API menggunakan framework Hapi, data validation dengan Joi, databbase PostgreSQL, Authentication dan Authorization, Error Handling, Normalisasi Database, Upload Gambar, menerapkan RabbitMQ sebagai Message Broker dan Menggunakan Redis untuk _server-side caching_ pada Open Music API.
+
+## Costumer Repository 
+[Costumer Repository](https://github.com/HizkiaReppi/open-music-api-costumer)
+
+<hr />
+
 Create with ❤ | Hizkia Reppi
